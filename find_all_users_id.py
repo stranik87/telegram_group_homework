@@ -12,9 +12,12 @@ def find_all_users_id(data: dict)->list:
     id_list = []
     for i in data['messages']:
         if i['type'] == 'service':
-            id_list.append(i['actor_id'])
-        elif i['type'] == 'message':
-            id_list.append(i['from_id'])
+            if i['actor_id'] not in id_list:
+                id_list.append(i['actor_id'])
+        if i['type'] == 'message':
+            if i['from_id'] not in id_list:
+                id_list.append(i['from_id'])
     return id_list
-    
+data = read_data('data/result.json')
+print(find_all_users_id(data))
     
